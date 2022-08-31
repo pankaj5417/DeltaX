@@ -1,4 +1,5 @@
 import './App.css';
+import { AddNewSong } from './components/addSong/AddNewSong';
 import { Navbar } from './components/Navbar/Navbar';
 import { Songs } from './components/songs/Songs';
 
@@ -7,6 +8,7 @@ function App() {
     <div className="App">
       <Navbar/>
       <Songs/>
+      <AddNewSong/>
     </div>
   );
 }
