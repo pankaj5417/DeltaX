@@ -1,0 +1,19 @@
+.navbar{
+    height: 80px;
+}
+.bg-light{
+    background-color: lightgray !important;
+}
+.container-fluid{
+    flex-wrap: nowrap !important;
+}
+.searchContainer{
+    display: flex;
+    align-items: center;
+    background-color: white;
+
+}
+.searchBox{
+    outline: none !important;
+    border: none !important;
+}
