@@ -19,7 +19,7 @@ export const AddNewSong = () => {
 
   const [song, setSong] = useState(initialState);
   const [file, setFile] = useState("");
-  const [artist,setArtist]=useState("")
+  const [artist,setArtist]=useState({})
   const artistRef=useRef()
 
   const handleArtist=(e)=>{
@@ -52,6 +52,15 @@ console.log("song",song)
     navigate("/");
   };
 
+  const addArtist = async () => {
+    await axios.post("/addArtist", { artist });
+    navigate("/");
+  };
+  const handelModal = (e) => {
+    setArtist({ ...artist, [e.target.name]: e.target.value });
+  };
+
+  console.log("artist",artist)
   const handleChange = (e) => {
     setSong({ ...song, [e.target.name]: e.target.value });
   };
@@ -188,8 +197,8 @@ console.log("song",song)
                       aria-label="Close"
                     ></button>
                   </div>
+                    <form action="" onSubmit={(e)=>e.preventDefault()}>
                   <div className="modal-body " style={{ color: "black" }}>
-                    <form action="">
                     <div className="mb-3 row">
                       <label
                         for="inputArtist"
@@ -200,6 +209,7 @@ console.log("song",song)
                       <div className="col-sm-10">
                         <input
                           name="artistname"
+                          onChange={handelModal}
                           type="text"
                           className="form-control"
                           id="inputArtist"
@@ -218,6 +228,7 @@ console.log("song",song)
                         <input
                           name="dob"
                           type="date"
+                          onChange={handelModal}
                           className="form-control"
                           id="inputDate"
                         />
@@ -235,10 +246,11 @@ console.log("song",song)
                           name="bio"
                           className="form-control"
                           id="inputDate"
+                          onChange={handelModal}
                         />
                       </div>
                     </div>
-                    </form>
+                   
                   </div>
                   <div className="modal-footer">
                     <button
@@ -248,11 +260,12 @@ console.log("song",song)
                     >
                       Cancel
                     </button>
-                    <button type="button" className="btn btn-primary">
+                    <button onClick={addArtist} type="submit" className="btn btn-primary">
                       Done
                     </button>
                   {/* </div> */}
                 </div>
+                </form>
               </div>
             </div>
 
