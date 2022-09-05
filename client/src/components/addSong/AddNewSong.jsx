@@ -1,7 +1,61 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import "./addNewSong.css";
+import { useNavigate } from "react-router-dom";
+
 import Select from "react-select";
 export const AddNewSong = () => {
+  const initialState = {
+   songname: '',
+   releaseDate: '',
+    picture: '',
+    selectartist:"",
+   
+    createdDate: new Date()
+  };
+
+  const navigate = useNavigate();
+  // const location = useLocation();
+
+  const [song, setSong] = useState(initialState);
+  const [file, setFile] = useState("");
+  const [artist,setArtist]=useState("")
+  const artistRef=useRef()
+
+  const handleArtist=(e)=>{
+   const {value}=e.target
+   console.log(value)
+    //  const val=artistRef.current.hasValue()
+    // setSong({...song,"selectartist":val})
+    // song.selectartist=val
+      // setArtist(e.target.value)
+  }
+console.log("song",song)
+  useEffect(() => {
+    const getImage = async () => {
+      if (file) {
+        const data = new FormData();
+        data.append("name", file.name);
+        data.append("file", file);
+
+        const response = await axios.post("/file/upload", { data });
+        song.picture = response.data;
+      }
+    };
+    getImage();
+    // post.categories = location.search?.split('=')[1] || 'All';
+    // post.username = account.username;
+  }, [file]);
+
+  const saveSong = async () => {
+    await axios.post("/addSong", { song });
+    navigate("/");
+  };
+
+  const handleChange = (e) => {
+    setSong({ ...song, [e.target.name]: e.target.value });
+  };
+
   const options = [
     {
       label: "abc",
@@ -26,136 +80,196 @@ export const AddNewSong = () => {
   return (
     <>
       <div className="addNewSongContainer">
-        <div class="mb-3 row">
-          <label for="inputSong" class="col-sm-2 col-form-label">
-            Song Name
-          </label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputSong" />
+        <form action="" onSubmit={(e)=>e.preventDefault()}>
+          <div className="mb-3 row">
+            <label for="inputSong" className="col-sm-2 col-form-label">
+              Song Name
+            </label>
+            <div className="col-sm-10">
+              <input
+                name="songname"
+                onChange={handleChange}
+                type="text"
+                className="form-control"
+                id="inputSong"
+              />
+            </div>
           </div>
-        </div>
 
-        <div class="mb-3 row">
-          <label for="inputDate" class="col-sm-2 col-form-label">
-            Date Released
-          </label>
-          <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputDate" />
+          <div className="mb-3 row">
+            <label for="inputDate" className="col-sm-2 col-form-label">
+              Date Released
+            </label>
+            <div className="col-sm-10">
+              <input
+                type="date"
+                name="releaseDate"
+                onChange={handleChange}
+                className="form-control"
+                id="inputDate"
+              />
+            </div>
           </div>
-        </div>
 
-        <div class="mb-3 row">
-          <label for="inputFile" class="col-sm-2 col-form-label">
-            Artwork
-          </label>
-          <div class="col-sm-10 d-flex align-item-center">
-            <i class="fa fa-picture-o fa-2x " aria-hidden="true"></i>
-            <span>Upload Image</span>
-
-            <input
-              type="file"
-              style={{ display: "none" }}
-              placeho
-              accept=".png,.jpeg,.jpg"
-              class="form-control"
-              id="inputFile"
-            />
+          <div className="mb-3 row">
+            <label className="col-sm-2 col-form-label">Artwork</label>
+            <div className="col-sm-2 d-flex align-item-center">
+              <label
+                for="inputFile"
+                className="col-sm-10 d-flex col-form-label"
+              >
+                <i className="fa fa-picture-o fa-2x " aria-hidden="true"></i>
+                <span>Upload Image</span>
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={handleChange}
+                  accept=".png,.jpeg,.jpg"
+                  className="form-control"
+                  id="inputFile"
+                  name="picture"
+                />
+              </label>
+            </div>
           </div>
-        </div>
+          
+
+        </form>
 
         <div className="selectBox d-flex">
-          <label for="inputFile" class="col-sm-2 col-form-label">
+          <label for="select" className="col-sm-2 col-form-label">
             Artist
           </label>
-          <Select styles={styles} options={options} />
+          <Select
+            styles={styles}
+             value={song.selectartist}
+            options={options}
+            name="selectartist"
+           ref={artistRef}
+            onChange={d => handleChange({ target: { value: d.value, name: 'selectartist' } })}
+          />
+
           <div className="addSongButton">
-            <i class="fa fa-plus" aria-hidden="true"></i>
+            <i className="fa fa-plus" aria-hidden="true"></i>
 
             <span data-bs-toggle="modal" data-bs-target="#staticBackdrop">
               Add Artist
             </span>
-
-            {/* <button type="button" class="btn btn-primary" >
-  Launch static backdrop modal
-</button> */}
+          </div>
+           
 
             <div
-              class="modal fade"
+              className="modal fade"
               id="staticBackdrop"
+              style={{ width: "800px !important" }}
               data-bs-backdrop="static"
               data-bs-keyboard="false"
               tabindex="-1"
               aria-labelledby="staticBackdropLabel"
               aria-hidden="true"
             >
-              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                {/* <div class="modal-dialog"> */}
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" style={{color:"black"}}>
+              <div
+                style={{ width: "900px !important" }}
+                className="modal-dialog modal-dialog-centered modal-dialog-scrollable "
+              >
+                {/* <div className="modal-dialog"> */}
+                <div
+                  className="modal-content"
+                  style={{ width: "900px !important" }}
+                >
+                  <div className="modal-header">
+                    <h5 className="modal-title" style={{ color: "black" }}>
                       Add Artist
                     </h5>
                     <button
                       type="button"
-                      class="btn-close"
+                      className="btn-close"
                       data-bs-dismiss="modal"
                       aria-label="Close"
                     ></button>
                   </div>
-                  <div class="modal-body">
-                  <div class="mb-3 row">
-          <label for="inputSong" class="col-sm-2 col-form-label">
-            Artist Name
-          </label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputSong" />
-          </div>
-        </div>
-
-        <div class="mb-3 row">
-          <label for="inputDate" class="col-sm-2 col-form-label">
-            Date of birth
-          </label>
-          <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputDate" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="inputDate" class="col-sm-2 col-form-label">
-            Date of birth
-          </label>
-          <div class="col-sm-10">
-            <textarea  class="form-control" id="inputDate" />
-          </div>
-        </div>
-
+                  <div className="modal-body " style={{ color: "black" }}>
+                    <form action="">
+                    <div className="mb-3 row">
+                      <label
+                        for="inputArtist"
+                        className="col-sm-2 col-form-label text-dark"
+                      >
+                        Artist Name
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          name="artistname"
+                          type="text"
+                          className="form-control"
+                          id="inputArtist"
+                        />
+                      </div>
                     </div>
-                  <div class="modal-footer">
+
+                    <div className="mb-3 row">
+                      <label
+                        for="inputDate"
+                        className="col-sm-2 col-form-label text-dark"
+                      >
+                        Date of birth
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          name="dob"
+                          type="date"
+                          className="form-control"
+                          id="inputDate"
+                        />
+                      </div>
+                    </div>
+                    <div className="mb-3 row">
+                      <label
+                        for="inputDate"
+                        className="col-sm-2 col-form-label text-dark"
+                      >
+                        Bio
+                      </label>
+                      <div className="col-sm-10">
+                        <textarea
+                          name="bio"
+                          className="form-control"
+                          id="inputDate"
+                        />
+                      </div>
+                    </div>
+                    </form>
+                  </div>
+                  <div className="modal-footer">
                     <button
                       type="button"
-                      class="btn btn-secondary"
+                      className="btn btn-secondary"
                       data-bs-dismiss="modal"
                     >
-                      Close
+                      Cancel
                     </button>
-                    <button type="button" class="btn btn-primary">
-                      Understood
+                    <button type="button" className="btn btn-primary">
+                      Done
                     </button>
-                  </div>
+                  {/* </div> */}
                 </div>
               </div>
             </div>
 
-            {/* <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            {/* <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
   ...
 </div> */}
           </div>
         </div>
-        <div className="buttons d-flex">
-          <button type="button" class="btn btn-outline-primary">
+        <div className="buttons d-flex modal-footer">
+          <button type="button" className="btn btn-outline-primary">
             Cancel
           </button>
-          <button class="btn btn-secondary" type="button">
+          <button
+            onClick={saveSong}
+            className="btn btn-secondary"
+            type="submit"
+          >
             Save
           </button>
         </div>

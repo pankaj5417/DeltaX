@@ -1,12 +1,17 @@
 import "./songs.css";
+import { useNavigate } from "react-router-dom";
+
 export const Songs = () => {
+  const navigate=useNavigate()
+
+  
   return (
     <>
       <div className="songs">
         <div className="songsListContainer">
           <div className="songsHeading d-flex align-items-center  justify-content-between ">
             <h2>Top ten Songs</h2>
-            <div className="addSongButton">
+            <div onClick={()=>navigate('/addSong')} className="addSongButton">
               <i class="fa fa-plus" aria-hidden="true"></i>
 
               <span>Add Song</span>
