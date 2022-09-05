@@ -5,7 +5,7 @@ const userRoute=require("../src/controllers/user.controller")
 const songRoute=require("../src/controllers/song.controller")
 const artistRoute=require("../src/controllers/artist.controller")
 const upload=require("../upload")
-const url = 'http://localhost:5000';
+const url = 'http://localhost:3000';
 
 const app = express();
 
@@ -26,11 +26,13 @@ app.get('*', (req, res)=>{
 })
 
 
-app.post('/upload', upload.single("file"),  (req, res)=> {
+app.post('/upload', upload.single("file"),  async(req, res)=> {
   if(!req.file) 
         return res.status(404).json("File not found");
+        console.log("file",req.file)
     
-    const imageUrl = `${url}/file/${req.file.filename}`;
+    const imageUrl = `${url}/images/${req.file.filename}`;
+    // const imageUrl=req.file.filename
 
     res.status(200).json(imageUrl);  
 })

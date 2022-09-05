@@ -10,6 +10,7 @@
 .searchContainer{
     display: flex;
     align-items: center;
+    border-radius: 3px;
     background-color: white;
 
 }

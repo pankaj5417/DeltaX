@@ -4,6 +4,9 @@
     background-color: black;
     color: white;
 }
+.songs{
+    padding: 20px;
+}
 .on {
     color: rgba(186, 136, 19, 0.965);
   }

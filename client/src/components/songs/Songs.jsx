@@ -39,7 +39,7 @@ const [hover, setHover] = useState(0);
       <div className="songs">
         <div className="songsListContainer">
           <div className="songsHeading d-flex align-items-center  justify-content-between ">
-            <h2>Top ten Songs</h2>
+            <h2 className="textAlign-center">Top ten Songs</h2>
             <div onClick={()=>navigate('/addSong')} className="addSongButton">
               <i class="fa fa-plus" aria-hidden="true"></i>
 
@@ -66,7 +66,7 @@ const [hover, setHover] = useState(0);
                       <>
                       <tr key={d._id}>
                   <td  >
-                    <img style={{width:"100px"}} src={d.Cover} alt="" />
+                    <img style={{width:"100px"}} src={d.Cover?d.Cover:"http://localhost:3000/images/"+d.Cover} alt="" />
                   </td>
                   <td >{d.Name}</td>
                   <td>{d.DateofRelease}</td>
@@ -102,8 +102,8 @@ const [hover, setHover] = useState(0);
           </div>
         </div>
 
-        <div className="artistList">
-          <h2>Top ten Artists</h2>
+        <div className="artistList ">
+          <h2 >Top ten Artists</h2>
 
         
             <table class="table">

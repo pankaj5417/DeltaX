@@ -6,9 +6,18 @@
     
    
 }
-
-
-
+.addNewSongContainer{
+    margin-top: 30px;
+    padding: 20px;
+}
+.button{
+    width: 120px;
+    margin-right: 2px;
+}
+.selectBox{
+    min-width:300px ;
+    margin-left: 108px;
+}
 
 @media (min-width: 576px){
     .modal-dialog {
