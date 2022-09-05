@@ -9,7 +9,8 @@ export const Songs = () => {
 
   const [song,setSong]=useState()
   const [artistData,setArtistData]=useState()
-
+ const [rating, setRating] = useState(0);
+const [hover, setHover] = useState(0);
   const navigate=useNavigate()
 
   const getArtist = async () => {
@@ -53,7 +54,9 @@ export const Songs = () => {
                   <th scope="col">Song</th>
                   <th scope="col">Date of Release</th>
                   <th scope="col">Artist</th>
-                  <th scope="col">Rate</th>
+                  <th scope="col">
+                 
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -61,13 +64,35 @@ export const Songs = () => {
                   {
                     song?.map(d=>(
                       <>
-                      <tr>
+                      <tr key={d._id}>
                   <td  >
                     <img style={{width:"100px"}} src={d.Cover} alt="" />
                   </td>
                   <td >{d.Name}</td>
                   <td>{d.DateofRelease}</td>
                   <td>{(d.artist_id.map(a=>a.name)).join(",")}</td>
+                  <td>
+                  <p>
+                      {" "}
+                      {[...Array(5)].map((star, index) => {
+                        index += 1;
+                        return (
+                          <button
+                            type="button"
+                            key={index}
+                            className={
+                              index <= (hover || rating) ? "on" : "off"
+                            }
+                            onClick={() => setRating(index)}
+                            onMouseEnter={() => setHover(index)}
+                            onMouseLeave={() => setHover(rating)}
+                          >
+                            <span className="star">&#9733;</span>
+                          </button>
+                        );
+                      })}
+                    </p>
+                  </td>
                   </tr>
                       </>
                     ))

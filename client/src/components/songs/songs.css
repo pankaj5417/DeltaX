@@ -4,3 +4,9 @@
     background-color: black;
     color: white;
 }
+.on {
+    color: rgba(186, 136, 19, 0.965);
+  }
+  .off {
+    color: #ccc;
+  }
