@@ -9,7 +9,7 @@ export const AddNewSong = () => {
    songname: '',
    releaseDate: '',
     picture: '',
-    selectartist:"",
+    artists:"",
    
     createdDate: new Date()
   };
@@ -35,10 +35,11 @@ console.log("song",song)
     const getImage = async () => {
       if (file) {
         const data = new FormData();
-        data.append("name", file.name);
+        data.append("picture", file.name);
         data.append("file", file);
 
-        const response = await axios.post("/file/upload", { data });
+        const response = await axios.post("/upload", { data });
+        console.log(response)
         song.picture = response.data;
       }
     };
@@ -48,16 +49,19 @@ console.log("song",song)
   }, [file]);
 
   const saveSong = async () => {
-    await axios.post("/addSong", { song });
+   const res= await axios.post("/songs", { song });
+   console.log("song",res)
     navigate("/");
   };
 
   const addArtist = async () => {
-    await axios.post("/addArtist", { artist });
+   const res= await axios.post("/artists", { artist });
+   console.log("artist",res)
     navigate("/");
   };
   const handelModal = (e) => {
-    setArtist({ ...artist, [e.target.name]: e.target.value });
+   setArtist({ ...artist, [e.target.name]: e.target.value });
+
   };
 
   console.log("artist",artist)
@@ -67,12 +71,12 @@ console.log("song",song)
 
   const options = [
     {
-      label: "abc",
-      value: "abc",
+      label: "Pritam",
+      value: "Pritam",
     },
     {
-      label: "2",
-      value: 2,
+      label: "Arijit Singh",
+      value: "Arijit Singh",
     },
     {
       label: "3",
@@ -153,9 +157,9 @@ console.log("song",song)
             styles={styles}
              value={song.selectartist}
             options={options}
-            name="selectartist"
+            name="artists"
            ref={artistRef}
-            onChange={d => handleChange({ target: { value: d.value, name: 'selectartist' } })}
+            onChange={d => handleChange({ target: { value: d.value, name: 'artists' } })}
           />
 
           <div className="addSongButton">

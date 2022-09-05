@@ -5,7 +5,7 @@ const userRoute=require("../src/controllers/user.controller")
 const songRoute=require("../src/controllers/song.controller")
 const artistRoute=require("../src/controllers/artist.controller")
 const upload=require("../upload")
-const url = 'http://localhost:8000';
+const url = 'http://localhost:5000';
 
 const app = express();
 

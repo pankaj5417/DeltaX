@@ -8,9 +8,12 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const newSong = await SongsModel.create({
-      Name: req.body.Name,
-      DateofRelease: req.body.DateofRelease,
-      Cover: req.file.Cover,
+      Name: req.body.songname,
+      DateofRelease: req.body.releaseDate,
+      Cover: req.body.picture,
+      artist:req.body.artists,
+      artist_id:req.body.artist_id,
+      rating:req.body.rating
     });
 
     return res.status(200).json({
@@ -24,7 +27,7 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const songs = await  SongsModel.find({}).sort({rating:-1}).limit(10)
+    const songs = await  SongsModel.find().populate("artist_id").sort({rating:-1}).limit(10)
 
     return res.status(201).json({songs})
 

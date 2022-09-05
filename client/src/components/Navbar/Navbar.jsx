@@ -6,7 +6,7 @@ export const Navbar=()=>{
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
     <div className="container-fluid">
     
-    <a className="navbar-brand" href="#">Home</a>
+    <a className="navbar-brand" href="/">Home</a>
     <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
