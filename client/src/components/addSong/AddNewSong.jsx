@@ -25,7 +25,14 @@ export const AddNewSong = () => {
   
   console.log("song", song);
   useEffect(() => {
-    const getImage = async () => {
+    
+    
+
+  }, []);
+
+    const getImage = async (e) => {
+      const file=e.target.files[0]
+      setFile(e.target.files[0])
       if (file) {
         const data = new FormData();
         data.append("name", file.name);
@@ -36,11 +43,11 @@ export const AddNewSong = () => {
         console.log("upload",response);
         song.picture =await response.data;
       }
-    };
-    getImage();
+    }
+   
     // post.categories = location.search?.split('=')[1] || 'All';
     // post.username = account.username;
-  }, [file]);
+  
 
   const saveSong = async () => {
     const res = await axios.post("/songs",  song );
@@ -140,7 +147,8 @@ export const AddNewSong = () => {
                 <input
                   type="file"
                   style={{ display: "none" }}
-                  onChange={(e) => setFile(e.target.files[0])}
+                  // onChange={(e) => setFile(e.target.files[0])}
+                  onChange={getImage}
                   accept=".png,.jpeg,.jpg"
                   className="form-control"
                   id="inputFile"
