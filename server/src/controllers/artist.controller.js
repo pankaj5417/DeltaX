@@ -11,8 +11,9 @@ router.get("/", async (req, res) => {
   try {
     const artists = await ArtistModel.find()
       .populate("song_id")
-      .sort({ rating: -1 })
+      .sort({createdAt: -1 } )
       .limit(10);
+      
 
     return res.status(201).json({ artists });
   } catch (error) {
