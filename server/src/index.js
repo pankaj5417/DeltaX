@@ -5,7 +5,7 @@ const userRoute=require("../src/controllers/user.controller")
 const songRoute=require("../src/controllers/song.controller")
 const artistRoute=require("../src/controllers/artist.controller")
 const upload=require("../upload")
-const url = 'http://localhost:3000';
+const url = 'http://localhost:5000';
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors())
 
 
-app.use("/images",express.static(path.join(__dirname,"public/images")))
+app.use("/images",express.static(path.join(__dirname,"..","public/images")))
 app.use(express.static(path.join(__dirname, "/client/build")))
 app.use("/users",userRoute)
 app.use("/songs",songRoute)

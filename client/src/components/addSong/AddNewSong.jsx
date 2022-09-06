@@ -51,7 +51,7 @@ export const AddNewSong = () => {
   const addArtist = async () => {
     const res = await axios.post("/artists",  artist );
     console.log("artist", res);
-    navigate("/");
+    // navigate("/");
   };
   const handelModal = (e) => {
     setArtist({ ...artist, [e.target.name]: e.target.value });
@@ -79,6 +79,10 @@ export const AddNewSong = () => {
       label: "Lata Mangeskar",
       value: "Lata Mangeskar",
     },
+    {
+      label:"Jubin Nautiyal",
+      value:"Jubin Nautiyal"
+    }
   ];
 
   const styles = {

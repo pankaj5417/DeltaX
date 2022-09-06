@@ -70,7 +70,7 @@ const [hover, setHover] = useState(0);
                   </td>
                   <td >{d.Name}</td>
                   <td>{d.DateofRelease}</td>
-                  <td>{(d.artist_id.map(a=>a.name)).join(",")}</td>
+                  <td>{d.artist?d.artist+","+(d.artist_id.map(a=>a.name)).join(","):(d.artist_id.map(a=>a.name)).join(",")}</td>
                   <td>
                   <p>
                       {" "}
